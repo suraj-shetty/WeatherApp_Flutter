@@ -80,7 +80,12 @@ WeatherType getWeatherTypeFor(WeatherCondition condition, bool isNight) {
       }
 
     case WeatherCondition.cloudy:
-      return WeatherType.cloudy;
+    if (isNight == true) {
+        return WeatherType.cloudyNight;
+      } else {
+        return WeatherType.cloudy;
+      }
+      
 
     case WeatherCondition.drizzle:
       return WeatherType.lightRainy;
