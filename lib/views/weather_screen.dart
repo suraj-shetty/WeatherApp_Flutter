@@ -26,7 +26,7 @@ class WeatherScreen extends StatelessWidget {
 
                 SafeArea(
                   child: Padding(
-                    padding: const EdgeInsets.all(16.0),
+                    padding: const EdgeInsets.symmetric(vertical: 16),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -34,15 +34,20 @@ class WeatherScreen extends StatelessWidget {
 
                         SizedBox(height: 30),
 
-                        Text(
-                          "12-hour Forecast:",
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 18,
-                            color: Colors.black87,
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: Text(
+                            "12-hour Forecast:",
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 18,
+                              color: Colors.black87,
+                            ),
                           ),
                         ),
+
                         SizedBox(height: 10),
+
                         SizedBox(
                           height: 140,
                           child: ListView.separated(
@@ -52,8 +57,8 @@ class WeatherScreen extends StatelessWidget {
                               final hour = vm.weather!.hourly[index];
                               return HourWeatherTile(forecast: hour);
                             },
-                            separatorBuilder: (context, index) =>
-                                SizedBox(width: 12),
+                            separatorBuilder: (context, index) => SizedBox(width: 12),
+                            padding: EdgeInsets.symmetric(horizontal: 16),                              
                           ),
                         ),
                       ],
