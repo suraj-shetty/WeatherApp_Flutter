@@ -3,6 +3,8 @@ enum WeatherCondition {
   cloudy,
   partlyCloudy,
   fog,
+  haze,
+  dust,
   rain,
   thunderstorm,
   snow,

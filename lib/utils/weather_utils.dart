@@ -19,12 +19,14 @@ WeatherCondition mapStringToCondition(String input) {
     case 'snow':
       return WeatherCondition.snow;
     case 'mist':
-    case 'fog':
-    case 'haze':
     case 'smoke':
-    case 'dust':
     case 'sand':
     case 'ash':
+    case 'dust':
+      return WeatherCondition.dust;
+    case 'haze':
+      return WeatherCondition.haze;
+    case 'fog':
       return WeatherCondition.fog;
     default:
       return WeatherCondition.unknown;
@@ -105,7 +107,13 @@ WeatherType getWeatherTypeFor(WeatherCondition condition, bool isNight) {
     case WeatherCondition.thunderstorm:
       return WeatherType.thunder;
 
-    default:
+    case WeatherCondition.dust:
+      return WeatherType.dusty;
+
+    case WeatherCondition.haze:
+      return WeatherType.hazy;
+
+    case WeatherCondition.unknown:
       return WeatherType.overcast;
   }
 }
