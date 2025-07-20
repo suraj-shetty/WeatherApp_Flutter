@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../viewmodels/weather_viewmodel.dart';
+import 'package:weather_app/views/weather_header.dart';
+import 'hour_weather_tile.dart';
+import 'package:weather_app/utils/weather_gradients.dart';
 
 class WeatherScreen extends StatelessWidget {
   const WeatherScreen({super.key});
@@ -10,37 +13,55 @@ class WeatherScreen extends StatelessWidget {
     final vm = Provider.of<WeatherViewModel>(context);
 
     return Scaffold(
-      appBar: AppBar(title: Text("Weather")),
+      backgroundColor: Colors.red,
       body: vm.isLoading
           ? Center(child: CircularProgressIndicator())
           : vm.weather == null
-              ? Center(child: Text("Unable to load weather"))
-              : Padding(
+          ? Center(child: Text("Unable to load weather"))
+          : Container(
+              decoration: BoxDecoration(
+                gradient: WeatherGradients.getGradient(
+                  vm.weather!.weatherCondition,                  
+                  isNight: false,
+                ),
+              ),
+              child: SafeArea(
+                child: Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("Location: ${vm.weather!.city}", style: TextStyle(fontSize: 18)),
-                      Text("Temp: ${vm.weather!.temperature}°C"),
-                      Text("Feels Like: ${vm.weather!.feelsLike}°C"),
-                      Text("Humidity: ${vm.weather!.humidity}%"),
-                      SizedBox(height: 20),
-                      Text("12-hour Forecast:", style: TextStyle(fontWeight: FontWeight.bold)),
+                      WeatherHeader(),
+
+                      SizedBox(height: 30),
+
+                      Text(
+                        "12-hour Forecast:",
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 18,
+                          color: Colors.black87,
+                        ),
+                      ),
                       SizedBox(height: 10),
-                      Expanded(
-                        child: ListView.builder(
+                      SizedBox(
+                        height: 140,
+                        child: ListView.separated(
+                          scrollDirection: Axis.horizontal,
                           itemCount: vm.weather!.hourly.length,
                           itemBuilder: (context, index) {
                             final hour = vm.weather!.hourly[index];
-                            return ListTile(
-                              title: Text("${hour.time.hour}:00 - ${hour.temp}°C"),
-                            );
+                            return HourWeatherTile(forecast: hour);
                           },
+                          separatorBuilder: (context, index) =>
+                              SizedBox(width: 12),
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ),
+              ),
+            ),
     );
   }
 }

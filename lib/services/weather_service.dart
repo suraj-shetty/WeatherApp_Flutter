@@ -1,8 +1,9 @@
 import 'package:weather/weather.dart';
+import 'package:weather_app/utils/weather_utils.dart';
 import '../models/weather_data.dart';
 
 class WeatherService {
-  final WeatherFactory _weatherFactory = WeatherFactory('043ee7850c2362dab3fba31a76a76ea3');
+  final WeatherFactory _weatherFactory = WeatherFactory('10f7c9534998cf3f708ab32328b4707b');
 
   Future<WeatherData> getWeather(double lat, double lon) async {
     final current = await _weatherFactory.currentWeatherByLocation(lat, lon);
@@ -12,6 +13,7 @@ class WeatherService {
       return HourlyForecast(
         time: f.date ?? DateTime.now(),
         temp: f.temperature?.celsius ?? 0.0,
+        condition: mapStringToCondition(f.weatherMain ?? "")
       );
     }).toList();
 
@@ -20,6 +22,10 @@ class WeatherService {
       temperature: current.temperature?.celsius ?? 0.0,
       feelsLike: current.tempFeelsLike?.celsius ?? 0.0,
       humidity: current.humidity?.toDouble() ?? 0.0,
+      highTemp: current.tempMax?.celsius ?? 0.0,
+      lowTemp: current.tempMin?.celsius ?? 0.0,
+      weatherCondition: mapStringToCondition(current.weatherMain ?? ""),
+      weatherCode: current.weatherIcon ?? "",
       hourly: hourlyForecast,
     );
   }
