@@ -9,6 +9,8 @@ class WeatherData {
   final double lowTemp;
   final WeatherCondition weatherCondition;
   final String weatherCode;
+  final DateTime? sunrise;
+  final DateTime? sunset;
   final List<HourlyForecast> hourly;
 
   WeatherData({
@@ -20,6 +22,8 @@ class WeatherData {
     required this.lowTemp,
     required this.weatherCondition,
     required this.weatherCode,
+    this.sunrise,
+    this.sunset,
     required this.hourly,
   });
 }

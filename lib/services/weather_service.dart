@@ -26,6 +26,8 @@ class WeatherService {
       lowTemp: current.tempMin?.celsius ?? 0.0,
       weatherCondition: mapStringToCondition(current.weatherMain ?? ""),
       weatherCode: current.weatherIcon ?? "",
+      sunrise: current.sunrise,
+      sunset: current.sunset,
       hourly: hourlyForecast,
     );
   }

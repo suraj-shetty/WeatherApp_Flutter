@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../models/weather_data.dart';
 import '../services/location_service.dart';
 import '../services/weather_service.dart';
+import 'package:weather_app/utils/weather_utils.dart';
 
 class WeatherViewModel extends ChangeNotifier {
   final _locationService = LocationService();
@@ -24,5 +25,12 @@ class WeatherViewModel extends ChangeNotifier {
 
     _isLoading = false;
     notifyListeners();
+  }
+
+  bool isNightTime() {
+    if ((_weather?.sunrise != null)&& (_weather?.sunset != null)) {
+      return !isDayTime(DateTime.now(), _weather!.sunrise!, _weather!.sunset!);
+    }
+    return !isDayTimeQuick(DateTime.now());
   }
 }
